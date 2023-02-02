@@ -13,19 +13,24 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - mongo
+      - mongo-chat
     env_file: ./server-chat-socketio/.env
     environment:
       - NODE_ENV=development
     networks:
       - chat-network
 
-  mongo:
+  mongo-chat:
     image: mongo
     volumes:
-      - data-volume:/data/db
+      -  mongo-chat-data-volume:/data/db
     ports:
       - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+    restart: on-failure
+
     networks:
       - chat-network
 
@@ -51,7 +56,7 @@ networks:
         driver: bridge
 
 volumes:
-    data-volume:
+    mongo-chat-data-volume:
     node_modules:
     web-root:
       driver: local
