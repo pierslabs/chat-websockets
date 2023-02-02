@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  server-chat:
+    build:
+      context: ./server-chat-socketio
+      dockerfile: Dockerfile
+    image: server-chat-socketio-img
+    container_name: server-chat-socketio
+ 
+    volumes:
+      - /app/node_modules
+      - ./server-chat-socketio/:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    env_file: ./server-chat-socketio/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - chat-network
+
+  mongo:
+    image: mongo
+    volumes:
+      - data-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - chat-network
+
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   image: myapp-client
+  #   container_name: myapp-react-client
+  #   command: npm start
+  #   volumes:
+  #     - ./client/:/usr/app
+  #     - /usr/app/node_modules
+  #   depends_on:
+  #     - server
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-network
+
+networks:
+    chat-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local
