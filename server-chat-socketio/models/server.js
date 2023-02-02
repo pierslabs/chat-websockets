@@ -3,8 +3,10 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const { dbConnection } = require('../database/config');
+const cors = require('cors');
 
 const Sockets = require('./sockets');
+const { rmSync } = require('fs');
 
 class Server {
   constructor() {
@@ -21,7 +23,11 @@ class Server {
     this.io = socketio(this.server, {});
   }
 
-  middlewares() {}
+  middlewares() {
+    this.app.use(cors());
+
+    this.app.use('/api/v1', require('../router/index'));
+  }
 
   configurarSockets() {
     new Sockets(this.io);
