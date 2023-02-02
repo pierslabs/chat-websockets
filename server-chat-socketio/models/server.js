@@ -2,6 +2,7 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+const { dbConnection } = require('../database/config');
 
 const Sockets = require('./sockets');
 
@@ -9,6 +10,9 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
+    // DB Connection
+    dbConnection();
 
     // Http server
     this.server = http.createServer(this.app);
