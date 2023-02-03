@@ -1,12 +1,13 @@
 import { useCallback, useRef } from 'react';
 import { createContext, useState } from 'react';
+import { fetchWithOutAuth } from '../helpers/fetchApi';
 
 export const AuthContext = createContext();
 
 const initialState = {
   uid: null,
   checking: true,
-  log: false,
+  logged: false,
   name: null,
   email: null,
 };
@@ -14,9 +15,50 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
-  const login = (email, password) => {};
+  const login = async (email, password) => {
+    const resp = await fetchWithOutAuth(
+      'auth/login',
+      { email, password },
+      'POST'
+    );
 
-  const register = (name, email, password) => {};
+    if (resp.ok) {
+      localStorage.setItem('token', resp.token);
+      const { user } = resp;
+
+      setAuth({
+        email: user.email,
+        uid: user.uid,
+        name: user.name,
+        logged: true,
+        checking: false,
+      });
+    }
+
+    return { ok: resp.ok, msg: resp.msg || null };
+  };
+
+  const register = async (name, email, password) => {
+    console.log(name, email, password);
+    const resp = await fetchWithOutAuth(
+      '/auth/new',
+      { name, email, password },
+      'POST'
+    );
+
+    if (resp.ok) {
+      localStorage.setItem('token', resp.token);
+      const { user } = resp;
+      setAuth({
+        email: user.email,
+        uid: user.uid,
+        name: user.name,
+        logged: true,
+        checking: false,
+      });
+    }
+    return { ok: resp.ok, msg: resp.msg || null };
+  };
 
   /* verify token va dentro de un useEffect se utiliza useCallback para evitar que cada 
   vez que se renderice el componente apunte a un nuevo espacio de memoria y eso dispararia
@@ -27,7 +69,9 @@ export const AuthProvider = ({ children }) => {
   const logOut = () => {};
 
   return (
-    <AuthContext.Provider value={{ login, register, verifyToken, logOut }}>
+    <AuthContext.Provider
+      value={{ login, register, verifyToken, logOut, auth }}
+    >
       {children}
     </AuthContext.Provider>
   );
