@@ -4,7 +4,7 @@ require('dotenv').config();
 const dbConnection = async () => {
   try {
     mongoose.set('strictQuery', true);
-    await mongoose.connect('mongodb://mongo-chat:27017');
+    await mongoose.connect(process.env.DB_URI);
 
     console.log('DB online 🚀!!!');
   } catch (error) {

@@ -25,7 +25,8 @@ class Server {
 
   middlewares() {
     this.app.use(cors());
-
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use('/api/v1', require('../router/index'));
   }
 
