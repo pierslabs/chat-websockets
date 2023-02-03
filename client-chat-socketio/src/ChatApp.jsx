@@ -1,8 +1,13 @@
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthContext';
 import AppRouter from './router/AppRouter';
 
 const ChatApp = () => {
-  return <AppRouter />;
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 };
 
 export default ChatApp;
