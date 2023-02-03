@@ -1,6 +1,5 @@
-import { useCallback, useRef } from 'react';
-import { createContext, useState } from 'react';
-import { fetchWithOutAuth } from '../helpers/fetchApi';
+import { useCallback, createContext, useState } from 'react';
+import { fetchAuth, fetchWithOutAuth } from '../helpers/fetchApi';
 
 export const AuthContext = createContext();
 
@@ -64,9 +63,37 @@ export const AuthProvider = ({ children }) => {
   vez que se renderice el componente apunte a un nuevo espacio de memoria y eso dispararia
   multiples veces de ese efecto
   */
-  const verifyToken = useCallback(() => {}, []);
+  const verifyToken = useCallback(async () => {
+    const token = localStorage.getItem('token');
 
-  const logOut = () => {};
+    if (!token) {
+      setAuth(initialState);
+      return false;
+    }
+
+    const resp = await fetchAuth('/auth/refresh');
+
+    if (resp.ok) {
+      localStorage.setItem('token', resp.token);
+      const { user } = resp;
+      setAuth({
+        email: user.email,
+        uid: user.uid,
+        name: user.name,
+        logged: true,
+        checking: false,
+      });
+      return true;
+    } else {
+      setAuth(initialState);
+      return false;
+    }
+  }, []);
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setAuth(initialState);
+  };
 
   return (
     <AuthContext.Provider
