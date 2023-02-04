@@ -1,6 +1,7 @@
 const {
   userConnected,
   userDisconnected,
+  getUsers,
 } = require('../controllers/sockets.controller');
 const { verifyJWT } = require('../helpers/jwt');
 
@@ -32,6 +33,7 @@ class Sockets {
       // TODO: get active users 'uid'
 
       // TODO Emit all conected users
+      this.io.emit('get', await getUsers());
 
       // TODO: Socket join  uid,  hall
 
@@ -42,6 +44,7 @@ class Sockets {
       socket.on('disconnect', async () => {
         console.log('client disconnect!!');
         await userDisconnected(uid);
+        this.io.emit('get', await getUsers());
       });
     });
   }

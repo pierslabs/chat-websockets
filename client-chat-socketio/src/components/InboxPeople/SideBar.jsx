@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SideBarItem from './SideBarItem';
+import { ChatContext } from '../../context/chat/Chatcontext';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 const SideBar = () => {
-  const chats = [1, 2, 3, 4, 5, 6, 7, 8];
+  const { chatState } = useContext(ChatContext);
+  const { auth } = useContext(AuthContext);
+  const { users } = chatState;
+
   return (
     <div className="inbox_chat">
-      {chats.map((chat) => (
-        <SideBarItem key={chat} />
-      ))}
+      {users
+        .filter((user) => user.uid !== auth.uid)
+        .map((user) => (
+          <SideBarItem key={user.uid} user={user} />
+        ))}
       <div className="extra_space"></div>
     </div>
   );
