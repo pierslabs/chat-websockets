@@ -28,7 +28,6 @@ export const useForm = (initialForm = {}) => {
   };
 
   useEffect(() => {
-    console.log('render');
     const remeberEmail =
       formState.rememberme !== undefined
         ? localStorage.getItem('email')

@@ -30,8 +30,6 @@ const LoginPage = () => {
         position: 'top-left',
       });
     }
-
-    console.log('authenticado!!!');
   };
 
   return (

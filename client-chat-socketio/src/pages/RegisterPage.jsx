@@ -29,7 +29,6 @@ const RegisterPage = () => {
         position: 'top-left',
       });
     }
-    console.log('registrado');
   };
 
   return (
