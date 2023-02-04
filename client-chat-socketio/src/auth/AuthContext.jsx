@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     return { ok: resp.ok, msg: resp.msg || null };
   };
 
-  const register = async (name, email, password) => {
+  const register = async ({ name, email, password }) => {
     const resp = await fetchWithOutAuth(
       '/auth/new',
       { name, email, password },
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
     const resp = await fetchAuth('/auth/refresh');
 
-    if (resp.ok) {
+    if (resp.ok && resp.user) {
       localStorage.setItem('token', resp.token);
       const { user } = resp;
       setAuth({

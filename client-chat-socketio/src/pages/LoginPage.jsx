@@ -12,7 +12,8 @@ const formData = {
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
 
-  const { formState, onInputChange, toggleCheck } = useForm(formData);
+  const { formState, onInputChange, toggleCheck, onResetForm } =
+    useForm(formData);
 
   const { email, password, rememberme } = formState;
 

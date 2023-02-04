@@ -21,7 +21,7 @@ const RegisterPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const { ok, msg } = await register(name, password, email);
+    const { ok, msg } = await register({ name, email, password });
 
     if (!ok) {
       onResetForm();
