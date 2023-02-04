@@ -1,5 +1,5 @@
 import { useCallback, createContext, useState } from 'react';
-import { fetchAuth, fetchWithOutAuth } from '../helpers/fetchApi';
+import { fetchAuth, fetchWithOutAuth } from '../../helpers/fetchApi';
 
 export const AuthContext = createContext();
 

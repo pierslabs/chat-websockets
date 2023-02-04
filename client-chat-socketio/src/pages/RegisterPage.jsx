@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { toast, ToastBar, Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../auth/AuthContext';
+import { AuthContext } from '../context/auth/AuthContext';
 import { useForm } from '../hooks/useForm';
 
 const formData = {

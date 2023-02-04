@@ -1,4 +1,4 @@
-import { AuthProvider } from './auth/AuthContext';
+import { AuthProvider } from './context/auth/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import AppRouter from './router/AppRouter';
 

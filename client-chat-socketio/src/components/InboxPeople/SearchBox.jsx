@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../auth/AuthContext';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 const SearchBox = () => {
   const { auth, logOut } = useContext(AuthContext);

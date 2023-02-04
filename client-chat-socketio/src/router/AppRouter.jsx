@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { AuthContext } from '../auth/AuthContext';
+import { AuthContext } from '../context/auth/AuthContext';
+
 import { PrivateRoute } from './PrivateRoutes';
 import PublicRoute from './PublicRoute';
 
