@@ -1,3 +1,7 @@
+const {
+  userConnected,
+  userDisconnected,
+} = require('../controllers/sockets.controller');
 const { verifyJWT } = require('../helpers/jwt');
 
 class Sockets {
@@ -9,7 +13,7 @@ class Sockets {
 
   socketEvents() {
     // On connection
-    this.io.on('connection', (socket) => {
+    this.io.on('connection', async (socket) => {
       const token = socket.handshake.query['x-token'];
 
       const [valid, uid] = verifyJWT(token);
@@ -18,6 +22,8 @@ class Sockets {
         console.log('Unidentified socket 👮.');
         return socket.disconnect();
       }
+
+      await userConnected(uid);
 
       console.log('client conected 😄!!', { uid });
 
@@ -33,8 +39,9 @@ class Sockets {
 
       // TODO: disconect user  'DB'
 
-      socket.on('disconnect', () => {
+      socket.on('disconnect', async () => {
         console.log('client disconnect!!');
+        await userDisconnected(uid);
       });
     });
   }
