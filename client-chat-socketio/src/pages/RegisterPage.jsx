@@ -3,36 +3,32 @@ import { useContext } from 'react';
 import { toast, ToastBar, Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
+import { useForm } from '../hooks/useForm';
+
+const formData = {
+  name: '',
+  email: '',
+  password: '',
+};
 
 const RegisterPage = () => {
   const { register } = useContext(AuthContext);
 
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const { formState, onInputChange, onResetForm } = useForm(formData);
 
-  const onChange = ({ target }) => {
-    const { value, name } = target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+  const { name, password, email } = formState;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { name, password, email } = form;
+
     const { ok, msg } = await register(name, password, email);
 
     if (!ok) {
+      onResetForm();
       return toast.error(msg, {
         position: 'top-left',
       });
     }
-
     console.log('registrado');
   };
 
@@ -48,8 +44,8 @@ const RegisterPage = () => {
           className="input100"
           type="text"
           name="name"
-          value={form.name}
-          onChange={onChange}
+          value={name}
+          onChange={onInputChange}
           placeholder="Nombre"
           required
         />
@@ -61,8 +57,8 @@ const RegisterPage = () => {
           className="input100"
           type="email"
           name="email"
-          value={form.email}
-          onChange={onChange}
+          value={email}
+          onChange={onInputChange}
           placeholder="Email"
           required
         />
@@ -74,8 +70,8 @@ const RegisterPage = () => {
           className="input100"
           type="password"
           name="password"
-          value={form.password}
-          onChange={onChange}
+          value={password}
+          onChange={onInputChange}
           placeholder="Password"
           required
         />

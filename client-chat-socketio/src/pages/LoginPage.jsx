@@ -2,44 +2,29 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../auth/AuthContext';
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useForm } from '../hooks/useForm';
 
+const formData = {
+  email: '',
+  password: '',
+  rememberme: '',
+};
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-    rememberme: false,
-  });
 
-  useEffect(() => {
-    const remeberEmail = localStorage.getItem('email');
+  const { formState, onInputChange, toggleCheck } = useForm(formData);
 
-    if (remeberEmail) {
-      setForm((form) => ({ ...form, rememberme: true, email: remeberEmail }));
-    }
-  }, []);
-
-  const onChange = ({ target }) => {
-    const { name, value } = target;
-    setForm({ ...form, [name]: value });
-  };
-
-  const toggleCheck = () => {
-    setForm({
-      ...form,
-      rememberme: !form.rememberme,
-    });
-  };
+  const { email, password, rememberme } = formState;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    form.rememberme
-      ? localStorage.setItem('email', form.email)
+    formState.rememberme
+      ? localStorage.setItem('email', email)
       : localStorage.removeItem('email');
 
-    const { email, password } = form;
     const { ok, msg } = await login(email, password);
     if (!ok) {
+      onResetForm();
       return toast.error(msg, {
         position: 'top-left',
       });
@@ -59,10 +44,10 @@ const LoginPage = () => {
         <input
           className="input100"
           type="email"
-          name="email"
           placeholder="Email"
-          value={form.email}
-          onChange={onChange}
+          name="email"
+          value={email}
+          onChange={onInputChange}
           required
         />
         <span className="focus-input100"></span>
@@ -72,10 +57,10 @@ const LoginPage = () => {
         <input
           className="input100"
           type="password"
-          name="password"
           placeholder="Password"
-          value={form.password}
-          onChange={onChange}
+          name="password"
+          value={password}
+          onChange={onInputChange}
           required
         />
         <span className="focus-input100"></span>
@@ -88,7 +73,7 @@ const LoginPage = () => {
             id="ckb1"
             type="checkbox"
             name="rememberme"
-            checked={form.rememberme}
+            checked={rememberme}
             readOnly
           />
           <label className="label-checkbox100">Remember</label>

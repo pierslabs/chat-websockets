@@ -6,18 +6,15 @@ import PublicRoute from './PublicRoute';
 
 const AppRouter = () => {
   const { auth, verifyToken } = useContext(AuthContext);
-  console.log(auth.checking);
 
   useEffect(() => {
     verifyToken();
-    console.log('render');
   }, [verifyToken]);
 
   if (auth.checking) {
     <h1>Espere porfavor</h1>;
   }
 
-  console.log(auth);
   return (
     <BrowserRouter>
       <Routes>

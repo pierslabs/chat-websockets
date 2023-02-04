@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    console.log(name, email, password);
     const resp = await fetchWithOutAuth(
       '/auth/new',
       { name, email, password },
