@@ -6,7 +6,6 @@ const { dbConnection } = require('../database/config');
 const cors = require('cors');
 
 const Sockets = require('./sockets');
-const { rmSync } = require('fs');
 
 class Server {
   constructor() {
