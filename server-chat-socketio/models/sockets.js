@@ -28,6 +28,9 @@ class Sockets {
 
       console.log('client conected 😄!!', { uid });
 
+      // TODO: ADD user to chat room
+      socket.join(uid);
+
       // TODO: Validate token
 
       // TODO: get active users 'uid'
@@ -38,6 +41,10 @@ class Sockets {
       // TODO: Socket join  uid,  hall
 
       // TODO listen user emit msg
+
+      socket.on('message-to-user', (payload) => {
+        console.log(payload);
+      });
 
       // TODO: disconect user  'DB'
 
