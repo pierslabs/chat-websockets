@@ -3,4 +3,5 @@ export const types = {
   activeChat: '[CHAT] active selected chat',
   newMessage: '[CHAT] new message',
   getRoomMessages: '[CHAT] get all messages from a specific room',
+  closeSession: '[CHAT] close current session',
 };

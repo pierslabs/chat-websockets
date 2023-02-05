@@ -7,6 +7,7 @@ export const chatReducer = (state, action) => {
         ...state,
         users: action.payload,
       };
+
     case types.activeChat:
       if (state.chatActive === action.payload) return state;
       return {
@@ -32,6 +33,14 @@ export const chatReducer = (state, action) => {
       return {
         ...state,
         messages: action.payload,
+      };
+
+    case types.closeSession:
+      return {
+        uid: '',
+        chatActive: null,
+        users: [],
+        messages: [],
       };
 
     default:
