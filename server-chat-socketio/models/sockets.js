@@ -2,6 +2,7 @@ const {
   userConnected,
   userDisconnected,
   getUsers,
+  createMessage,
 } = require('../controllers/sockets.controller');
 const { verifyJWT } = require('../helpers/jwt');
 
@@ -42,8 +43,11 @@ class Sockets {
 
       // TODO listen user emit msg
 
-      socket.on('message-to-user', (payload) => {
+      socket.on('message-to-user', async (payload) => {
         console.log(payload);
+        const message = await createMessage(payload);
+        this.io.to(payload.to).emit('message-to-user', message);
+        this.io.to(payload.from).emit('message-to-user', message);
       });
 
       // TODO: disconect user  'DB'
