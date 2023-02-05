@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ChatContext } from '../../context/chat/Chatcontext';
+import { types } from '../../types/types';
 
 const SideBarItem = ({ user }) => {
-  console.log(user);
+  const { dispatch, chatState } = useContext(ChatContext);
+
+  const selectChat = () => {
+    dispatch({
+      type: types.activeChat,
+      payload: user.uid,
+    });
+  };
+
   return (
-    <div className="chat_list active_chat">
+    <div
+      className={`chat_list   
+    ${user.uid === chatState.chatActive && 'active_chat'}
+   `}
+      onClick={selectChat}
+    >
       <div className="chat_people">
         <div className="chat_img">
           <img

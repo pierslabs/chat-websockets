@@ -5,7 +5,7 @@ export const ChatContext = createContext();
 
 const initialState = {
   uid: '',
-  chatactive: null,
+  chatActive: null,
   users: [],
   messages: [],
 };

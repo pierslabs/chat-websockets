@@ -7,6 +7,13 @@ export const chatReducer = (state, action) => {
         ...state,
         users: action.payload,
       };
+    case types.activeChat:
+      if (state.chatActive === action.payload) return state;
+      return {
+        ...state,
+        chatActive: action.payload,
+        messages: [],
+      };
 
     default:
       return state;
