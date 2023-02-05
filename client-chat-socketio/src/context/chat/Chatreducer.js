@@ -27,6 +27,13 @@ export const chatReducer = (state, action) => {
       } else {
         return state;
       }
+
+    case types.getRoomMessages:
+      return {
+        ...state,
+        messages: action.payload,
+      };
+
     default:
       return state;
   }

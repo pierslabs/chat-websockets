@@ -1,14 +1,24 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ChatContext } from '../../context/chat/Chatcontext';
 import { types } from '../../types/types';
+import { fetchAuth } from '../../helpers/fetchApi';
 
 const SideBarItem = ({ user }) => {
   const { dispatch, chatState } = useContext(ChatContext);
 
-  const selectChat = () => {
+  const selectChat = async () => {
     dispatch({
       type: types.activeChat,
       payload: user.uid,
+    });
+
+    // Load chat messages
+
+    const resp = await fetchAuth(`messages/${user.uid}`);
+
+    dispatch({
+      type: types.getRoomMessages,
+      payload: resp.msg,
     });
   };
 
