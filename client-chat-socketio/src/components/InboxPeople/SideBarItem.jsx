@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ChatContext } from '../../context/chat/Chatcontext';
 import { types } from '../../types/types';
 import { fetchAuth } from '../../helpers/fetchApi';
+import { scrollToBottom } from '../../helpers/react-scroll-lib';
 
 const SideBarItem = ({ user }) => {
   const { dispatch, chatState } = useContext(ChatContext);
@@ -20,6 +21,8 @@ const SideBarItem = ({ user }) => {
       type: types.getRoomMessages,
       payload: resp.msg,
     });
+
+    scrollToBottom('messagesList');
   };
 
   return (

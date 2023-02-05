@@ -11,7 +11,7 @@ const Messages = () => {
 
   return (
     <div className="mesgs">
-      <div className="msg_history">
+      <div id="messagesList" className="msg_history">
         {chatState.messages.map((message) =>
           message.to === auth.uid ? (
             <ReceivedMessage key={message._id} msg={message} />

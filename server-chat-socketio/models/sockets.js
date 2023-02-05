@@ -44,7 +44,6 @@ class Sockets {
       // TODO listen user emit msg
 
       socket.on('message-to-user', async (payload) => {
-        console.log(payload);
         const message = await createMessage(payload);
         this.io.to(payload.to).emit('message-to-user', message);
         this.io.to(payload.from).emit('message-to-user', message);
