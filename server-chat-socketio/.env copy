@@ -1,0 +1,10 @@
+PORT=4000
+DB_USER = chat_user
+DB_PASS = 123456
+DB_URI= mongodb://chat_user:123456@mongo-chat:27017
+
+
+//JWT
+JWT_KEY=supermegaSEcrte674%
+
+

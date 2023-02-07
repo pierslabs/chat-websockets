@@ -1,0 +1,7 @@
+PORT=4000
+
+DB_USER = chat_user
+DB_PASS = 123456
+DB_URI= mongodb://chat_user:123456@localhost:27017
+
+
